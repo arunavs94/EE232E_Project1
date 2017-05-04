@@ -22,7 +22,7 @@ if (connectivity == FALSE){
 }
 
 # Compute the diameter
-g1_diameter <- diameter(g1, directed = TRUE, unconnected = TRUE, weights = NULL)
+g1_diameter <- diameter(g1, directed = FALSE, unconnected = TRUE, weights = NULL)
 cat('Diameter: ', g1_diameter ,'\n')
 
 # Generate and display Degree Distribution
