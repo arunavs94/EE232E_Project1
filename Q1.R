@@ -9,7 +9,7 @@ library("igraph")
 
 # Read in the data from .txt file
 graph_data <- read.table("facebook_combined.txt", sep = "", header = FALSE) # read text file
-g1 <- graph.data.frame(graph_data,directed = TRUE) # covert table to directed garph
+g1 <- graph.data.frame(graph_data,directed = FALSE) # covert table to directed garph
 
 # Check for connectivity 
 connectivity <- is.connected(g1, mode = "strong") # check if network is connected
