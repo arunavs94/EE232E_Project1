@@ -54,7 +54,7 @@ for(i in 1:1){
   comm_10plus = 0
   comm = fastgreedy.community(pers_net_tmp)
   for(j in 1:length(sizes(comm))){
-    if(sizes(comm)[j] >= 10){
+    if(sizes(comm)[j] > 10){
       comm_nodes = which(comm$membership==j)
       temp_comm = induced.subgraph(pers_net_tmp, comm_nodes)
       comms_comm = fastgreedy.community(temp_comm)
@@ -67,8 +67,8 @@ for(i in 1:1){
       cat("\n")
       cat('Density =' , graph.density(temp_comm, loops = TRUE))
       cat("\n")
-      cat('Clustering Coeffifient =', transitivity(temp_comm,type = "undirected"))
-      cat("\n")
+      cat('Clustering Coeffifient =', transitivity(temp_comm))
+      cat("\n\n")
     } 
   }
   
