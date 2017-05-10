@@ -65,7 +65,9 @@ for(i in 1:1){
       cat("\n")
       cat('Modularity =' , modularity(comms_comm))
       cat("\n")
-      cat('Density =' , edge_density(temp_comm, loops = TRUE))
+      cat('Density =' , graph.density(temp_comm, loops = TRUE))
+      cat("\n")
+      cat('Clustering Coeffifient =', transitivity(temp_comm,type = "undirected"))
       cat("\n")
     } 
   }
