@@ -25,7 +25,7 @@ for (i in 1:vcount(g1)) {
   net_tmp <- neighborhood(g1, order = 1, nodes = i)
   pers_net_tmp <- induced.subgraph(g1, vids = unlist(net_tmp), impl = "auto")
   
-  if (vcount(pers_net_tmp) > 201){
+  if (vcount(pers_net_tmp) > 200){
     core_nodes <- c(core_nodes,i)
   }
   
@@ -51,5 +51,26 @@ for(i in 1:1){
   cat('Nodes in network: ', pers_net_vertice_count)
   cat("\n")
   
+  comm_10plus = 0
   comm = fastgreedy.community(pers_net_tmp)
-}
+  for(j in 1:length(sizes(comm))){
+    if(sizes(comm)[j] >= 10){
+      comm_nodes = which(comm$membership==j)
+      temp_comm = induced.subgraph(pers_net_tmp, comm_nodes)
+      comms_comm = fastgreedy.community(temp_comm)
+      cat('Analyzing Community # ', j)
+      cat("\n")
+      
+      cat('Community size =' ,vcount(temp_comm))
+      cat("\n")
+      cat('Modularity =' , modularity(comms_comm))
+      cat("\n")
+      cat('Density =' , edge_density(temp_comm, loops = TRUE))
+      cat("\n")
+    } 
+  }
+  
+
+  
+  
+  }
