@@ -17,9 +17,9 @@ deg_corr_nodes <- numeric()
 # See which nodes have more than 201 nodes in their network (200 plus core node)
 for (i in 1:vcount(g1)) {
   net_tmp <- neighborhood(g1, order = 1, nodes = i)
-  pers_net_tmp <- induced_subgraph(g1, vids = unlist(net_tmp), impl = "auto")
+  pers_net_tmp <- induced.subgraph(g1, vids = unlist(net_tmp), impl = "auto")
   
-  if (vcount(pers_net_tmp) > 200){
+  if (vcount(pers_net_tmp) > 201){
     correct_nodes <- c(correct_nodes,i)
     deg_corr_nodes <- c(deg_corr_nodes,degree(g1, v = i))
     
@@ -27,12 +27,17 @@ for (i in 1:vcount(g1)) {
   
 }
 
+cat('Number of Core Nodes: ' ,length(correct_nodes),'\n')
+
+
 # Calculate average degree of core nodes
 core_deg_avg <- mean(deg_corr_nodes)
 
+cat('Average Degree of Core Nodes: ', core_deg_avg, '\n')
+
 # Chose a core node (picked 419 aribitrarily)
 core_419 <- neighborhood(g1, order = 1, nodes = 419)
-pers_net_419 <- induced_subgraph(g1, vids = unlist(core_419), impl = "auto")
+pers_net_419 <- induced.subgraph(g1, vids = unlist(core_419), impl = "auto")
 
 # Fast Greedy
 # Generate community
