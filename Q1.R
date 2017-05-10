@@ -9,16 +9,16 @@ library("igraph")
 
 # Read in the data from .txt file
 graph_data <- read.table("facebook_combined.txt", sep = "", header = FALSE) # read text file
-g1 <- graph.data.frame(graph_data,directed = TRUE) # covert table to directed garph
+g1 <- graph.data.frame(graph_data,directed = FALSE) # covert table to directed garph
 
 # Check for connectivity 
 connectivity <- is.connected(g1, mode = "strong") # check if network is connected
 # NOTE: do we need "strong here". If no, then that gives us a connected graph
 
 if (connectivity == FALSE){
-  cat('Graph is not connected.')
+  cat('Graph is not connected. \n')
 } else {
-  cat('Graph is connected.')
+  cat('Graph is connected. \n')
 }
 
 # Compute the diameter
@@ -36,7 +36,7 @@ curve <- nls(y ~ (exp(1)^(a + b * x)), data = g1_df, start = list(a = 0, b = 0),
 Degrees <- degree_dist$mids
 Frequency <- degree_dist$density
 
-plot(Degrees,Frequency)
+plot(Degrees,Frequency,main ="Degree Distribution w/ Fitted Curve")
 lines(Degrees,predict(curve),col="red")
 
 # Curve Performance Metrics
@@ -46,7 +46,7 @@ mse <- function(sm){
 
 sm <- summary(curve)
 g1_fit_mse <- mse(sm)
-cat('MSE: ', g1_fit_mse)
+cat('MSE: ', g1_fit_mse, '\n')
 
 # Computing average degree
 g1_deg_avg = mean(g1_deg)
