@@ -66,17 +66,18 @@ for(i in 1:40){
       comm_nodes = which(comm$membership==j)
       temp_comm = induced.subgraph(pers_net_tmp, comm_nodes)
       comms_comm = fastgreedy.community(temp_comm)
-      cat('Analyzing Community # ', count)
-      cat("\n")
       
-      cat('Community size =' ,vcount(temp_comm))
-      cat("\n")
-      cat('Modularity =' , modularity(comms_comm))
-      cat("\n")
-      cat('Density =' , graph.density(temp_comm, loops = TRUE))
-      cat("\n")
-      cat('Clustering Coeffifient =', transitivity(temp_comm))
-      cat("\n\n")
+      # cat('Analyzing Community # ', count)
+      # cat("\n")
+      # 
+      # cat('Community size =' ,vcount(temp_comm))
+      # cat("\n")
+      # cat('Modularity =' , modularity(comms_comm))
+      # cat("\n")
+      # cat('Density =' , graph.density(temp_comm, loops = TRUE))
+      # cat("\n")
+      # cat('Clustering Coeffifient =', transitivity(temp_comm))
+      # cat("\n\n")
       
       # Load values into feature dictionary
       features[[i]][[count]] <- c(modularity(comms_comm),transitivity(temp_comm), graph.density(temp_comm, loops = TRUE),vcount(temp_comm)) # ModIndex, ClusertingCoeff, Density, CommSize
@@ -88,3 +89,28 @@ for(i in 1:40){
   
   
 }
+
+# Write values out to excel file
+
+library("xlsx")
+
+totMat = numeric()
+
+for (i in 1:40) { # For each core node
+  
+  # Create matrix of values
+  
+  # List of all features for each community concatenated
+  tmp = c(unlist(features[[i]]),NaN,NaN,NaN,NaN) # First NaN = T1 ind, Last NaN = T2 ind
+  
+  t_mat = t(matrix(tmp,4,(length(tmp)/4)))
+  
+  totMat = rbind(totMat,t_mat)
+  
+}
+
+colNames = c('Modularity Index', 'Cluserting Coeff', 'Density', 'Community Size')
+write.xlsx(x=totMat, file = "test.writeout.xlsx", sheetName = "Test", row.names = FALSE, col.names = TRUE)
+
+
+
