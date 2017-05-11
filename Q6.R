@@ -25,7 +25,7 @@ for (i in 1:vcount(g1)) {
   net_tmp <- neighborhood(g1, order = 1, nodes = i)
   pers_net_tmp <- induced.subgraph(g1, vids = unlist(net_tmp), impl = "auto")
   
-  if (vcount(pers_net_tmp) > 200){
+  if (vcount(pers_net_tmp) > 201){
     core_nodes <- c(core_nodes,i)
   }
   
