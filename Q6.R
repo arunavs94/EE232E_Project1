@@ -92,25 +92,79 @@ for(i in 1:40){
 
 # Write values out to excel file
 
-library("xlsx")
+# library("xlsx")
 
 totMat = numeric()
-
+T1 = numeric() #familia 
+T2 = numeric() #school
 for (i in 1:40) { # For each core node
   
   # Create matrix of values
   
   # List of all features for each community concatenated
-  tmp = c(unlist(features[[i]]),NaN,NaN,NaN,NaN) # First NaN = T1 ind, Last NaN = T2 ind
+  list_core_i = unlist(features[[i]])
+  num_idxs = length(list_core_i)/4
+  temp_mat = t(matrix(list_core_i,4,num_idxs))
   
-  t_mat = t(matrix(tmp,4,(length(tmp)/4)))
+
+  # Find T1 (indicies for community of type 1)
+    com_size_list = temp_mat[,4]
+    density_list = temp_mat[,3]
+    modularity_list = temp_mat[,1]
   
-  totMat = rbind(totMat,t_mat)
+    # find 2 smallest size comms
+    smallest_sizes = numeric() #store indices of 2 smallest community sizes
+    min_idx = which.min(com_size_list)
+    smallest_sizes = c(smallest_sizes, min_idx) #append
+    com_size_list[min_idx] = Inf #set smallest idx to inf to find second smallest idx
+    min_idx_2 = which.min(com_size_list)
+    smallest_sizes = c(smallest_sizes, min_idx_2) #append
+  
+    # of the 2 smallest size comms, find highest density
+    if (density_list[smallest_sizes[1]] >= density_list[smallest_sizes[2]] ){
+      temp_t1 = smallest_sizes[1] # smallest_sizes[1] is greater 
+    } else {
+      temp_t1 = smallest_sizes[2] # smallest_sizes[2] is greater
+    } 
+    
+      
+    
+  
+  # Find T2 (indicies for community of type 2)
+    com_size_list = temp_mat[,4]
+    density_list = temp_mat[,3]
+    modularity_list = temp_mat[,1]
+    
+    # find 2 largest size comms
+    largest_sizes = numeric()  #store indices of 2 largest community sizses
+    max_idx = which.max(com_size_list)
+    largest_sizes = c(largest_sizes, max_idx) #append
+    com_size_list[max_idx] = 0 # set largest idx to 0 to find second largest idx
+    max_idx_2 = which.max(com_size_list)
+    largest_sizes = c(largest_sizes,max_idx_2) #append
+  
+    # of the 2 largest size comms, find highest modularity
+    if (modularity_list[largest_sizes[1]] >= modularity_list[largest_sizes[2]] ){
+      temp_t2 = largest_sizes[1] # largest_sizes[1] is greater 
+    } else {
+      temp_t2 = largest_sizes[2] # largest_sizes[2] is greater
+    } 
+  
+  long_t1 = rep(temp_t1,num_idxs) # repeat t1 for the number of indices 
+  long_t2 = rep(temp_t2,num_idxs) # repeat t2 for the number of indices 
+  
+  T1 = c(T1,long_t1,NaN)
+  T2 = c(T2,long_t2,NaN)
+    
+  totMat = rbind(totMat,temp_mat)
+  totMat = rbind(totMat,c(NaN,NaN,NaN,NaN)) # add row of nans
   
 }
 
-colNames = c('Modularity Index', 'Cluserting Coeff', 'Density', 'Community Size')
-write.xlsx(x=totMat, file = "test.writeout.xlsx", sheetName = "Test", row.names = FALSE, col.names = TRUE)
+  totMat = cbind(totMat,T1,T2) #append a col of T1 and T2 to totMat
+
+# colNames = c('Modularity Index', 'Cluserting Coeff', 'Density', 'Community Size')
+# write.xlsx(x=totMat, file = "test.writeout.xlsx", sheetName = "Test", row.names = FALSE, col.names = TRUE)
 
 
 
