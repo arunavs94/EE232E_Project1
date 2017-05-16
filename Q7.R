@@ -44,6 +44,10 @@ for (i in 1:length(unique_ids)){
   
 }
 
+# Amount of core nodes
+cat('Amount of users with more than two circles:', length(correct_ids))
+
+
 comm_circ_intersect <- function(core_node_num){
     # inputs: core_node_num-select index that you want to run (change everytime)
     # outputs: 1 big matrix with infomap and walktrap confussion matrices (circles vs communities) seperated by a row of NaNs
