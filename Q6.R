@@ -1,11 +1,17 @@
+# This code is programmed in R v2.15.2.with iGraph v0.7.0 
+
+
 # clearing workspace
 closeAllConnections()
 rm(list=ls())
 
 # Load libraries
 library("igraph")
+library("xlsx")
+
 
 ####################  QUESTION 6 ####################
+cat(' #################### QUESTION 6 #################### \n ')
 
 # Read in the data from .txt file
 
@@ -92,7 +98,6 @@ for(i in 1:40){
 
 # Write values out to excel file
 
-# library("xlsx")
 
 totMat = numeric()
 T1 = numeric() #familia 
@@ -163,6 +168,8 @@ for (i in 1:40) { # For each core node
 
   totMat = cbind(totMat,T1,T2) #append a col of T1 and T2 to totMat
 
+# comment the next two lines out to generate excel files
+  
 # colNames = c('Modularity Index', 'Cluserting Coeff', 'Density', 'Community Size')
 # write.xlsx(x=totMat, file = "test.writeout.xlsx", sheetName = "Test", row.names = FALSE, col.names = TRUE)
 

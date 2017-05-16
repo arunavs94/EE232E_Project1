@@ -1,3 +1,6 @@
+# This code is programmed in R v2.15.2.with iGraph v0.7.0 
+
+
 # clearing workspace
 closeAllConnections()
 rm(list=ls())
@@ -6,6 +9,7 @@ rm(list=ls())
 library("igraph")
 
 ####################  QUESTION 3  ####################
+cat(' #################### QUESTION 3 #################### \n ')
 
 # Read in the data from .txt file
 graph_data <- read.table("facebook_combined.txt", sep = "", header = FALSE) # read text file
@@ -74,6 +78,8 @@ plot(pers_net_419 , vertex.size=node_size , vertex.label=NA , vertex.color=im_co
 title("Infomap with Core Node 419")
 
 ####################  QUESTION 4 ####################
+cat(' #################### QUESTION 4 #################### \n ')
+
 
 # Remove core node from community, then get induced subgraph
 uncore_419 = unlist(core_419)[(unlist(core_419) != 419)]

@@ -1,6 +1,13 @@
+# This code is programmed in R v2.15.2.with iGraph v0.7.0 
+
+
 # clearing workspace
 closeAllConnections()
 rm(list=ls())
+
+####################  QUESTION 7 ####################
+cat(' #################### QUESTION 7 #################### \n ')
+
 
 # Load libraries
 library("igraph")
