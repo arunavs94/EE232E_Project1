@@ -6,7 +6,7 @@ rm(list=ls())
 library("igraph")
 library("xlsx")
 # Establish correct path to working directory (change for specific user)
-# setwd("~/Desktop/Project1/EE232E_Project1")
+setwd("~/Desktop/Project1/EE232E_Project1")
 options(scipen=999)
 
 # Store file names into list
@@ -36,20 +36,20 @@ for (i in 1:length(unique_ids)){
   
 }
 
-comm_circ_intersect <- function(i){
-    # inputs: i-select index that you want to run (change everytime)
+comm_circ_intersect <- function(core_node_num){
+    # inputs: core_node_num-select index that you want to run (change everytime)
     # outputs: 1 big matrix with infomap and walktrap confussion matrices (circles vs communities) seperated by a row of NaNs
     #           will also output big matrices to excel file
   
   
       # Use edge data from correct files to create personal networks and determine feature vectors
   
-  cat('Core Node # ', i)
+  cat('Core Node # ', core_node_num)
   cat("\n")
   
   # Define paths
-  path_name_edges = paste("gplus/" , correct_ids[i], sep="", ".edges")
-  path_name_circ = paste("gplus/" , correct_ids[i], sep="", ".circles")
+  path_name_edges = paste("gplus/" , correct_ids[core_node_num], sep="", ".edges")
+  path_name_circ = paste("gplus/" , correct_ids[core_node_num], sep="", ".circles")
   
   # Opens file and read it
   filename_circ = file(path_name_circ , open="r")
@@ -62,10 +62,10 @@ comm_circ_intersect <- function(i){
   nodes_wo_core = V(pers_net)
   
   # Need to add core node to personal network
-  pers_net = add.vertices(pers_net, nv = 1, name = correct_ids[i])
+  pers_net = add.vertices(pers_net, nv = 1, name = correct_ids[core_node_num])
   
   # Need to add edges to core node in personal network
-  code_node_idx = which(V(pers_net)$name==correct_ids[i])
+  code_node_idx = which(V(pers_net)$name==correct_ids[core_node_num])
   
   added_edge_pair = c()
   
@@ -149,7 +149,7 @@ comm_circ_intersect <- function(i){
   wt_conf_mat = t(matrix(percentages_wt, ncol = length(sizes(wt_comm)), nrow = length(circs)))
   
   entire_mat = rbind(im_conf_mat,rep(NaN,length(circs)),wt_conf_mat)
-  write.xlsx(x=entire_mat, file = "circ_comm_compare.xlsx", sheetName = paste("Core Node ",i), row.names = FALSE, col.names = TRUE)
+  write.xlsx(x=entire_mat, file = paste("circ_comm_compare_",core_node_num,sep="",".xlsx"),sheetName = 'Sheet 1', row.names = FALSE, col.names = TRUE)
   return(entire_mat)
 
 }
