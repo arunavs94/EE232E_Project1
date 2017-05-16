@@ -1,3 +1,6 @@
+# This code is programmed in R v2.15.2.with iGraph v0.7.0 
+
+
 # clearing workspace
 closeAllConnections()
 rm(list=ls())
@@ -6,6 +9,7 @@ rm(list=ls())
 library("igraph")
 
 ####################  QUESTION 1 ####################
+cat(' #################### QUESTION 1 #################### \n ')
 
 # Read in the data from .txt file
 graph_data <- read.table("facebook_combined.txt", sep = "", header = FALSE) # read text file
