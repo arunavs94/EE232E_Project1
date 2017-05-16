@@ -12,8 +12,9 @@ cat(' #################### QUESTION 7 #################### \n ')
 # Load libraries
 library("igraph")
 library("xlsx")
-# Establish correct path to working directory (change for specific user)
-setwd("~/Desktop/Project1/EE232E_Project1")
+
+# Be sure to establish correct path to working directory (change for specific user)
+
 options(scipen=999)
 
 # Store file names into list
